@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+
 class GildedRose {
 	private static final int QUALITY_MIN = 0;
 	private static final int QUALITY_MAX = 50;
@@ -28,7 +30,7 @@ class GildedRose {
 	}
 
 	public void updateQuality(Item item) {
-		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES) && !item.name.equals(SULFURAS)) {
+		if (!Arrays.asList(AGED_BRIE, BACKSTAGE_PASSES, SULFURAS).contains(item.name)) {
 			if (item.quality > QUALITY_MIN) {
 				decrementQualityByOne(item);
 			}
@@ -40,17 +42,19 @@ class GildedRose {
 
 		}
 
-		if (item.name.equals(BACKSTAGE_PASSES)) {
-			if (item.sellIn < 10) {
-				if (item.quality < QUALITY_MAX) {
-					incrementQualityByOne(item);
-				}
-			}
+		if (!item.name.equals(BACKSTAGE_PASSES)) {
+			return;
+		}
 
-			if (item.sellIn < 5) {
-				if (item.quality < QUALITY_MAX) {
-					incrementQualityByOne(item);
-				}
+		if (item.sellIn < 10) {
+			if (item.quality < QUALITY_MAX) {
+				incrementQualityByOne(item);
+			}
+		}
+
+		if (item.sellIn < 5) {
+			if (item.quality < QUALITY_MAX) {
+				incrementQualityByOne(item);
 			}
 		}
 
