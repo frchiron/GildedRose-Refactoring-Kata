@@ -19,6 +19,7 @@ class GildedRose {
 			decrementSellIn(item);
 
 			updateQuality(item);
+
 			if (item.sellIn < 0) {
 				updateQualityWhenNegativeSellIn(item);
 			}
@@ -27,40 +28,32 @@ class GildedRose {
 	}
 
 	public void updateQuality(Item item) {
-		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES)) {
+		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES) && !item.name.equals(SULFURAS)) {
 			if (item.quality > QUALITY_MIN) {
-				if (!item.name.equals(SULFURAS)) {
-					decrementQualityByOne(item);
+				decrementQualityByOne(item);
+			}
+			return;
+		}
+
+		if (item.quality < QUALITY_MAX) {
+			incrementQualityByOne(item);
+
+		}
+
+		if (item.name.equals(BACKSTAGE_PASSES)) {
+			if (item.sellIn < 10) {
+				if (item.quality < QUALITY_MAX) {
+					incrementQualityByOne(item);
 				}
 			}
-		} else {
-			if (item.quality < QUALITY_MAX) {
-				incrementQualityByOne(item);
 
-				if (item.name.equals(BACKSTAGE_PASSES)) {
-					if (item.sellIn < 10) {
-						if (item.quality < QUALITY_MAX) {
-							incrementQualityByOne(item);
-						}
-					}
-
-					if (item.sellIn < 5) {
-						if (item.quality < QUALITY_MAX) {
-							incrementQualityByOne(item);
-						}
-					}
+			if (item.sellIn < 5) {
+				if (item.quality < QUALITY_MAX) {
+					incrementQualityByOne(item);
 				}
 			}
 		}
 
-	}
-
-	public int decrementQualityByOne(Item item) {
-		return item.quality = item.quality - 1;
-	}
-
-	public int incrementQualityByOne(Item item) {
-		return item.quality = item.quality + 1;
 	}
 
 	public void updateQualityWhenNegativeSellIn(Item item) {
@@ -80,6 +73,14 @@ class GildedRose {
 			}
 			return;
 		}
+	}
+
+	public int decrementQualityByOne(Item item) {
+		return item.quality = item.quality - 1;
+	}
+
+	public int incrementQualityByOne(Item item) {
+		return item.quality = item.quality + 1;
 	}
 
 	public void decrementSellIn(Item item) {
