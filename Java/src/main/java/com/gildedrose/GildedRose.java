@@ -15,9 +15,8 @@ class GildedRose {
 	}
 
 	public void updateQuality() {
-		for (int i = 0; i < items.length; i++) {
+		for (Item item : items) {
 
-			Item item = items[i];
 			decrementSellIn(item);
 
 			updateQuality(item);
