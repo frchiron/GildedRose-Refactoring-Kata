@@ -20,7 +20,7 @@ public class GildedRoseTest {
 
 		GildedRoseLegacy legacyApp = new GildedRoseLegacy(itemsLegacy);
 
-		int days = 2;
+		int days = 50;
 
 		StringBuilder legacyResult = new StringBuilder();
 		for (int i = 0; i < days; i++) {
@@ -46,7 +46,7 @@ public class GildedRoseTest {
 
 		GildedRose app = new GildedRose(items);
 
-		days = 2;
+		days = 50;
 
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < days; i++) {
