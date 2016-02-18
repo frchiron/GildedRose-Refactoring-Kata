@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 class GildedRose {
+	private static final int DEFAULT_QUALITY_DROP = 1;
 	private static final int FIVE_DAYS = 5;
 	private static final int TEN_DAYS = 10;
 	private static final int QUALITY_MIN = 0;
@@ -47,12 +48,9 @@ class GildedRose {
 	}
 
 	public void updateQualityDefault(Item item) {
+		int qualityDrop = item.sellIn < 0 ? DEFAULT_QUALITY_DROP * 2 : DEFAULT_QUALITY_DROP;
 		if (item.quality > QUALITY_MIN) {
-			decrementQualityByOne(item);
-		}
-
-		if (item.quality > QUALITY_MIN && item.sellIn < 0) {
-			decrementQualityByOne(item);
+			item.quality = Math.max(QUALITY_MIN, decrementQualityBy(item, qualityDrop));
 		}
 
 	}
