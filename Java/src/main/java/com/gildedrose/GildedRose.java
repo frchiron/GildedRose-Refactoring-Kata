@@ -1,6 +1,8 @@
 package com.gildedrose;
 
 class GildedRose {
+	private static final int QUALITY_MIN = 0;
+	private static final int QUALITY_MAX = 50;
 	private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
 	private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
 	private static final String AGED_BRIE = "Aged Brie";
@@ -26,25 +28,25 @@ class GildedRose {
 
 	public void updateQuality(Item item) {
 		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES)) {
-			if (item.quality > 0) {
+			if (item.quality > QUALITY_MIN) {
 				if (!item.name.equals(SULFURAS)) {
-					item.quality = item.quality - 1;
+					decrementQualityByOne(item);
 				}
 			}
 		} else {
-			if (item.quality < 50) {
-				item.quality = item.quality + 1;
+			if (item.quality < QUALITY_MAX) {
+				incrementQualityByOne(item);
 
 				if (item.name.equals(BACKSTAGE_PASSES)) {
 					if (item.sellIn < 10) {
-						if (item.quality < 50) {
-							item.quality = item.quality + 1;
+						if (item.quality < QUALITY_MAX) {
+							incrementQualityByOne(item);
 						}
 					}
 
 					if (item.sellIn < 5) {
-						if (item.quality < 50) {
-							item.quality = item.quality + 1;
+						if (item.quality < QUALITY_MAX) {
+							incrementQualityByOne(item);
 						}
 					}
 				}
@@ -53,20 +55,28 @@ class GildedRose {
 
 	}
 
+	public int decrementQualityByOne(Item item) {
+		return item.quality = item.quality - 1;
+	}
+
+	public int incrementQualityByOne(Item item) {
+		return item.quality = item.quality + 1;
+	}
+
 	public void updateQualityWhenNegativeSellIn(Item item) {
 		if (item.name.equals(AGED_BRIE)) {
-			if (item.quality < 50) {
-				item.quality = item.quality + 1;
+			if (item.quality < QUALITY_MAX) {
+				incrementQualityByOne(item);
 			}
 			return;
 		}
 		if (item.name.equals(BACKSTAGE_PASSES)) {
-			item.quality = 0;
+			item.quality = QUALITY_MIN;
 			return;
 		}
 		if (!item.name.equals(SULFURAS)) {
-			if (item.quality > 0) {
-				item.quality = item.quality - 1;
+			if (item.quality > QUALITY_MIN) {
+				decrementQualityByOne(item);
 			}
 			return;
 		}
