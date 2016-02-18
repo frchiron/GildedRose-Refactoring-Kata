@@ -29,11 +29,6 @@ class GildedRose {
 	}
 
 	public void updateQuality(Item item) {
-		updateQualityFirstPart(item);
-
-	}
-
-	public void updateQualityFirstPart(Item item) {
 		switch (item.name) {
 		case AGED_BRIE:
 			updateQualityForAgedBrie(item);
@@ -48,6 +43,7 @@ class GildedRose {
 			updateQualityDefault(item);
 			break;
 		}
+
 	}
 
 	public void updateQualityDefault(Item item) {
@@ -55,11 +51,10 @@ class GildedRose {
 			decrementQualityByOne(item);
 		}
 
-		if (item.sellIn < 0) {
-			if (item.quality > QUALITY_MIN) {
-				decrementQualityByOne(item);
-			}
+		if (item.quality > QUALITY_MIN && item.sellIn < 0) {
+			decrementQualityByOne(item);
 		}
+
 	}
 
 	public void updateQualityForBackstagePasses(Item item) {
@@ -101,6 +96,10 @@ class GildedRose {
 			incrementQualityByOne(item);
 		}
 
+	}
+
+	public int decrementQualityBy(Item item, int drop) {
+		return item.quality = item.quality - drop;
 	}
 
 	public int decrementQualityByOne(Item item) {
